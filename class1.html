@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Grades</title>
+    <script src="external.js" defer></script>
+</head>
+<body>
+    <h1>Student Grades</h1>
+
+    <p>Enter the marks of students (comma-separated): <input type="text" id="marksInput"></p>
+    <button onclick="calculateGrades()">Calculate Grades</button>
+
+    <p id="average"></p>
+    <ul id="studentList"></ul>
+
+    <script>
+        // Inline JavaScript function to calculate grades and update HTML
+        function calculateGrades() {
+            var marksInput = document.getElementById('marksInput').value;
+            var marksArray = marksInput.split(',').map(Number);
+
+            var sum = 0;
+            for (var i = 0; i < marksArray.length; i++) {
+                sum += marksArray[i];
+            }
+
+            var average = sum / marksArray.length;
+            document.getElementById('average').innerText = 'Average Marks: ' + average.toFixed(2);
+
+            var studentList = document.getElementById('studentList');
+            studentList.innerHTML = ''; // Clear previous content
+
+            for (var i = 0; i < marksArray.length; i++) {
+                var listItem = document.createElement('li');
+                var grade = calculateGrade(marksArray[i]);
+                listItem.textContent = 'Student ' + (i + 1) + ': Marks - ' + marksArray[i] + ', Grade - ' + grade;
+                studentList.appendChild(listItem);
+            }
+        }
+
+        // External JavaScript function to determine grades
+        function calculateGrade(marks) {
+            if (marks >= 90) {
+                return 'A';
+            } else if (marks >= 80) {
+                return 'B';
+            } else if (marks >= 70) {
+                return 'C';
+            } else if (marks >= 60) {
+                return 'D';
+            } else {
+                return 'F';
+            }
+        }
+    </script>
+</body>
+</html>
